@@ -83,3 +83,33 @@ def hod2_view_attendance(request):
             print('form invalid')
     return render(request,'hod2_template/hod2_view_dateask.html',{'form':form})
 
+def hod2_searchdept(request):
+    if request.method =="POST":
+        data = request.POST
+        dept = request.POST.get('departement')
+        j = str(dept)
+        print(j)
+        #course = Staff.objects.filter(course__name__startswith=j)
+        print("ok")
+    allStaff = CustomUser.objects.filter(user_type=2)
+    staff = Staff.objects.filter(course_id=1)
+    print(staff)
+    #.filter(cl=cl)
+    aform=AttendanceStaffForm()
+    if request.method=='POST':
+        form=AttendanceStaffForm(request.POST)
+        if form.is_valid():
+            Attendances=request.POST.getlist('present_status')
+            date=form.cleaned_data['date']
+            for i in range(len(Attendances)):
+                AttendanceModel=AttendanceStaff()
+                #AttendanceModel.cl=cl
+                AttendanceModel.date=date
+                AttendanceModel.present_status=Attendances[i]
+                #AttendanceModel.course=allStaff[i].course
+                AttendanceModel.save()
+            return redirect('hod2_take_attendance')
+        else:
+            print('form invalid')
+    return render(request,'hod2_template/hod2_take_attendance.html',{'staffs':allStaff,'aform':aform})
+        
