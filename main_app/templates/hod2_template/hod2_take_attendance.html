@@ -17,16 +17,17 @@
                     <!-- form start -->
                     <div class="card-body">
 
-                        <form action="{% url 'searchdept' %}" method="post">
-                            {% csrf_token %}
-                            <label for="Departement">Departement</label>
-                            <input type="text" id="departemnt" name="departement"><br><br>
-                            <input type="submit" value="Submit">
-                        </form>
+                        <!-- <form action="{% url 'hod2_take_attendance' %}" method="post">
+                            {% csrf_token %} -->
+                            <!-- <label for="Departement">Departement</label>
+                            <input type="text" id="departemnt" name="departement"><br><br> -->
+                            <!-- <input type="submit" value="Submit"> -->
+                        <!-- </form> -->
 
                         <form method="post">
                             <div class="container">
-                          
+                                <label for="Departement">Departement</label>
+                                <input type="text" id="departemnt" name="departement"><br><br>
                               <div class="row">
                           
                                 <div class="panel panel-primary">
@@ -46,11 +47,11 @@
                           
                           
                                     {% csrf_token %}
-                                    {%for staff in staffs%}
+                                    {%for a,b in mylist%}
                                     <tr>
-                                      <td>{{staff.last_name}}</td>
+                                      <td>{{a}}</td>
                                       
-                                      <td>{{aform.present_status}}</td>
+                                      <td>{% render_field aform.present_status class="form-control" placeholder="Enter Date mm/dd/yyyy" %}</td>
                                     </tr>
                                     {%endfor%}
 
@@ -59,29 +60,9 @@
                           
                                   </table>
 
-                                  <table class="table table-hover" id="dev-table">
-                                    <thead>
+                    
                           
-                                      <tr>
-                                        <th>Staff Name</th>
-                                        <th>Present/Absent</th>
-                                      </tr>
-                                    </thead>
-                          
-                          
-                                    {% csrf_token %}
-                                    {%for cours in course%}
-                                    <tr>
-                                      <td>{{cours.last_name}}</td>
-                                      
-                                      <td>{{aform.present_status}}</td>
-                                    </tr>
-                                    {%endfor%}
-
-                                    
-                          
-                          
-                                  </table>
+                                   
                                   {% render_field aform.date class="form-control" placeholder="Enter Date mm/dd/yyyy" %}
                                   <input type="submit" style="margin-left: 200px;
                                                                   margin-top: 20px;
