@@ -89,6 +89,7 @@ urlpatterns = [
     # Staff
     path("staff/home/", staff_views.staff_home, name='staff_home'),
      path("hod/home/", hod2_views.hod2_home, name='hod2_home'),
+     #path("hod/dept/search", hod2_views.hod2_searchdept, name='searchdept'),
     path("staff/apply/leave/", staff_views.staff_apply_leave,
          name='staff_apply_leave'),
     path("staff/feedback/", staff_views.staff_feedback, name='staff_feedback'),
