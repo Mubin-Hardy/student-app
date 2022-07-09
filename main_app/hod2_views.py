@@ -73,11 +73,15 @@ def hod2_view_attendance(request):
         if form.is_valid():
             print("formok")
             date=form.cleaned_data['date']
+            dept=request.POST.get('departement')
             attendancedata=AttendanceStaff.objects.all().filter(date=date)
             studentdata=CustomUser.objects.filter(user_type=2)
+            course = Staff.objects.filter(course__name__startswith=dept)
             print(studentdata)
             print(attendancedata)
-            mylist = zip(studentdata, attendancedata)
+            print(course)
+
+            mylist = zip(course, attendancedata)
             context = {
             'mylist': mylist,
             'date':date,
