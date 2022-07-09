@@ -62,7 +62,7 @@ class StudentForm(CustomUserForm):
     class Meta(CustomUserForm.Meta):
         model = Student
         fields = CustomUserForm.Meta.fields + \
-            ['course', 'session']
+            ['course', 'session','username']
 
 
 class AdminForm(CustomUserForm):
@@ -95,6 +95,12 @@ class HodForm(CustomUserForm):
         model = hod2
         fields = CustomUserForm.Meta.fields + \
             ['course' ]
+
+class ParentForm(CustomUserForm):
+    def __init__(self, *args, **kwargs):
+        super(ParentForm, self).__init__(*args, **kwargs)
+
+    
 class AskDateForm(forms.Form):
     date=forms.DateField()
 class CourseForm(FormSettings):

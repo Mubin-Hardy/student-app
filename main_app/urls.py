@@ -17,7 +17,7 @@ from django.urls import path
 
 from main_app.EditResultView import EditResultView
 
-from . import hod_views, staff_views, student_views, views,hod2_views
+from . import hod_views, staff_views, student_views, views,hod2_views,parent_views
 
 urlpatterns = [
     path("", views.login_page, name='login_page'),
@@ -28,6 +28,7 @@ urlpatterns = [
     path("admin/home/", hod_views.admin_home, name='admin_home'),
     path("staff/add", hod_views.add_staff, name='add_staff'),
     path("hod/add", hod_views.add_hod, name='add_hod'),
+    path("parent/add", hod_views.add_parent, name='add_parent'),
     path("course/add", hod_views.add_course, name='add_course'),
     path("send_student_notification/", hod_views.send_student_notification,
          name='send_student_notification'),
@@ -89,6 +90,8 @@ urlpatterns = [
     # Staff
     path("staff/home/", staff_views.staff_home, name='staff_home'),
      path("hod/home/", hod2_views.hod2_home, name='hod2_home'),
+      path("parent/home/", parent_views.parent_home, name='parent_home'),
+      path("parent/due/", parent_views.parent_due, name='parent_due'),
      #path("hod/dept/search", hod2_views.hod2_searchdept, name='searchdept'),
     path("staff/apply/leave/", staff_views.staff_apply_leave,
          name='staff_apply_leave'),

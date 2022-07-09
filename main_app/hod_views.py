@@ -76,6 +76,42 @@ def add_hod(request):
             messages.error(request, "Please fulfil all requirements")
 
     return render(request, 'hod_template/add_headofdepartment_template.html', context)
+def add_parent(request):
+    form = ParentForm(request.POST or None, request.FILES or None)
+    context = {'form': form, 'page_title': 'Add Parent'}
+    if request.method == 'POST':
+        if form.is_valid():
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            address = form.cleaned_data.get('address')
+            email = form.cleaned_data.get('email')
+            gender = form.cleaned_data.get('gender')
+            password = form.cleaned_data.get('password')
+            fee = form.cleaned_data.get('fee')
+            passport = request.FILES.get('profile_pic')
+            fs = FileSystemStorage()
+            filename = fs.save(passport.name, passport)
+            passport_url = fs.url(filename)
+            try:
+                user = CustomUser.objects.create_user(
+                    email=email, password=password, user_type=5, first_name=first_name, last_name=last_name, profile_pic=passport_url)
+                user.gender = gender
+                user.address = address
+                print("ok1k")
+                user.parent.fee = fee
+                print("okk2")
+                user.save()
+                print("okk3")
+                messages.success(request, "Successfully Added")
+                return redirect(reverse('add_parent'))
+
+            except Exception as e:
+                
+                messages.error(request, "oops " + str(e))
+        else:
+            messages.error(request, "Please fulfil all requirements")
+
+    return render(request, 'hod_template/add_parent_template.html', context)
 def add_staff(request):
     form = StaffForm(request.POST or None, request.FILES or None)
     context = {'form': form, 'page_title': 'Add Staff'}

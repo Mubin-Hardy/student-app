@@ -77,7 +77,9 @@ class Student(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.DO_NOTHING, null=True, blank=False)
     session = models.ForeignKey(Session, on_delete=models.DO_NOTHING, null=True)
-
+    username = models.TextField(max_length=50)
+    student_fee = models.IntegerField(null=True)
+    student_fee_paid = models.IntegerField(null=True)
     def __str__(self):
         return self.admin.last_name + ", " + self.admin.first_name
 
@@ -90,6 +92,13 @@ class Staff(models.Model):
         return self.admin.last_name + " " + self.admin.first_name
 class hod2(models.Model):
     course = models.ForeignKey(Course, on_delete=models.DO_NOTHING, null=True, blank=False)
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+  
+
+    def __str__(self):
+        return self.admin.last_name + " " + self.admin.first_name
+class Parent(models.Model):
+   
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
   
 
@@ -197,6 +206,8 @@ def create_user_profile(sender, instance, created, **kwargs):
             Student.objects.create(admin=instance)
         if instance.user_type == 4:
             hod2.objects.create(admin=instance)
+        if instance.user_type == 5:
+            Parent.objects.create(admin=instance)
 
 
 
@@ -210,4 +221,5 @@ def save_user_profile(sender, instance, **kwargs):
         instance.student.save()
     if instance.user_type == 4:
         instance.hod2.save()
-   
+    if instance.user_type == 5:
+        instance.parent.save()
