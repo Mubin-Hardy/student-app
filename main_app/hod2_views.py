@@ -19,13 +19,18 @@ def hod2_home(request):
     }
     return render(request, 'hod2_template/home_content.html', context)
 def manage_staff_hod2(request):
-    allStaff = CustomUser.objects.filter(user_type=2)
-    print(allStaff)
-    context = {
-        'allStaff': allStaff,
-        'page_title': 'View Staff'
-    }
-    return render(request, "hod2_template/manage_staff_hod2.html", context)
+    if request.method=='POST':
+        dept = request.POST.get('departement')
+        allStaff = CustomUser.objects.filter(user_type=2)
+        course = Staff.objects.filter(course__name__startswith=dept)
+        mylist = zip(course,allStaff)
+        print(allStaff)
+        context = {
+            'mylist': mylist,
+            'page_title': 'View Staff'
+        }
+        return render(request, "hod2_template/manage_staff_hod2.html", context)
+    return render(request, "hod2_template/manage_staff_hod2.html")
 
 def hod2_take_attendance(request):
     if request.method=='POST':
